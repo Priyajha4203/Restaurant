@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block class %}class="sub_page"{% endblock class %}
+
+{% block feedback_status %}active{% endblock feedback_status %}
+
+{% block main %}
+
+<!-- feedback section -->
+
+
+<head>    
+    <link rel="stylesheet" href="styles.css">
+
+<style>
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #232736;
+    place-items:center;
+    
+}
+
+/* Feedback Form Container */
+.feedback-container {
+    background-color: white;
+    padding: 50px;
+    border-radius: 30px;
+    text-align: center;
+    width: 500px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Input Fields */
+input, textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Star Rating */
+.star-rating {
+    display: flex;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.star {
+    color: #ddd;
+    transition: color 0.3s;
+}
+
+.star.active {
+    color: yellow;
+}
+
+/* Submit Button */
+button {
+    background-color: #3478C6;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #265A96;
+}
+
+</style>
+</head>
+<body>
+
+    <div class="feedback-container">
+        <h2>Tell us what you think</h2>
+        <form action="{% url "Feedback_Form" %}" method="POST">{% csrf_token %}
+            <input type="text" name="name" placeholder="Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <textarea name="feedback" placeholder="Tell us what you think" required></textarea>
+
+            <div class="star-rating">
+                <span class="star" onclick="rate(1)">★</span>
+                <span class="star" onclick="rate(2)">★</span>
+                <span class="star" onclick="rate(3)">★</span>
+                <span class="star" onclick="rate(4)">★</span>
+                <span class="star" onclick="rate(5)">★</span>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        function rate(stars) {
+            let starElements = document.querySelectorAll('.star');
+            starElements.forEach((star, index) => {
+                if (index < stars) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+    </script>
+
+
+<!-- end feedback section -->
+
+  {% endblock main %}
